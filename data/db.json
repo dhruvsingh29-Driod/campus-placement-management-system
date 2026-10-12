@@ -1,11 +1,39 @@
 {
   "students": [
-    { "id": "s1", "name": "Ananya Rao", "email": "ananya@vit.edu", "password": "pass123", "branch": "CSE", "cgpa": 8.7, "resumeLink": "" },
-    { "id": "s2", "name": "Karthik Iyer", "email": "karthik@vit.edu", "password": "pass123", "branch": "ECE", "cgpa": 7.9, "resumeLink": "" }
+    {
+      "id": "s1",
+      "name": "Ananya Rao",
+      "email": "ananya@vit.edu",
+      "password": "pass123",
+      "branch": "CSE",
+      "cgpa": 8.7,
+      "resumeLink": ""
+    },
+    {
+      "id": "s2",
+      "name": "Karthik Iyer",
+      "email": "karthik@vit.edu",
+      "password": "pass123",
+      "branch": "ECE",
+      "cgpa": 7.9,
+      "resumeLink": ""
+    }
   ],
   "companies": [
-    { "id": "c1", "name": "TCS", "email": "hr@tcs.com", "password": "pass123", "description": "IT services and consulting" },
-    { "id": "c2", "name": "Infosys", "email": "hr@infosys.com", "password": "pass123", "description": "Global IT consulting" }
+    {
+      "id": "c1",
+      "name": "TCS",
+      "email": "hr@tcs.com",
+      "password": "pass123",
+      "description": "IT services and consulting"
+    },
+    {
+      "id": "c2",
+      "name": "Infosys",
+      "email": "hr@infosys.com",
+      "password": "pass123",
+      "description": "Global IT consulting"
+    }
   ],
   "drives": [
     {
@@ -13,8 +41,11 @@
       "companyId": "c1",
       "role": "Software Engineer Trainee",
       "description": "Entry-level role for CSE/IT graduates. Includes training program.",
-      "minCgpa": 7.0,
-      "eligibleBranches": ["CSE", "IT"],
+      "minCgpa": 7,
+      "eligibleBranches": [
+        "CSE",
+        "IT"
+      ],
       "package": "3.6 LPA",
       "lastDate": "2026-09-15",
       "status": "open"
@@ -25,13 +56,44 @@
       "role": "Systems Engineer",
       "description": "Hands-on role across application development and support.",
       "minCgpa": 6.5,
-      "eligibleBranches": ["CSE", "ECE", "IT"],
+      "eligibleBranches": [
+        "CSE",
+        "ECE",
+        "IT"
+      ],
       "package": "3.6 LPA",
       "lastDate": "2026-09-20",
+      "status": "open"
+    },
+    {
+      "id": "d37885",
+      "companyId": "c1",
+      "role": "bjkb",
+      "description": "b",
+      "minCgpa": 7,
+      "eligibleBranches": [
+        "CSE",
+        "IT"
+      ],
+      "package": "7.7",
+      "lastDate": "2009-01-29",
       "status": "open"
     }
   ],
   "applications": [
-    { "id": "a1", "studentId": "s1", "driveId": "d1", "status": "applied", "appliedOn": "2026-08-10" }
+    {
+      "id": "a1",
+      "studentId": "s1",
+      "driveId": "d1",
+      "status": "applied",
+      "appliedOn": "2026-08-10"
+    },
+    {
+      "id": "a24743",
+      "studentId": "s1",
+      "driveId": "d2",
+      "status": "applied",
+      "appliedOn": "2026-10-12"
+    }
   ]
 }
