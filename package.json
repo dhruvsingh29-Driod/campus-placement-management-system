@@ -1,0 +1,17 @@
+{
+  "name": "campus-placement-management-system",
+  "version": "1.0.0",
+  "description": "Full-stack web application for managing campus placements, job drives, and student applications with server-side eligibility verification.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": ["campus-placement", "job-portal", "express", "nodejs", "placement-management"],
+  "author": "Dhruv Singh",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^5.2.1"
+  }
+}

@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Campus Placement Management System | Portal</title>
+  <meta name="description" content="A full-stack web application for managing campus placement drives, student applications, and recruitment workflows." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-icon">🎓</div>
+      <div>
+        <h1 id="appTitle">CampusPlacement <span class="badge-beta">PRO</span></h1>
+      </div>
+    </div>
+    
+    <div id="userBadge" class="hidden">
+      <div class="user-pill">
+        <span class="user-avatar" id="userAvatar">U</span>
+        <span id="userLabel">Student</span>
+      </div>
+      <button id="logoutBtn" class="btn-logout">Logout ↗</button>
+    </div>
+  </header>
+
+  <!-- Global Stats Dashboard Banner -->
+  <div class="container" id="statsSection">
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon indigo">💼</div>
+        <div class="stat-details">
+          <h4>Active Drives</h4>
+          <div class="stat-val" id="statDrives">—</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon cyan">🎓</div>
+        <div class="stat-details">
+          <h4>Students Registered</h4>
+          <div class="stat-val" id="statStudents">—</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon amber">📝</div>
+        <div class="stat-details">
+          <h4>Applications Logged</h4>
+          <div class="stat-val" id="statApplications">—</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon emerald">🏆</div>
+        <div class="stat-details">
+          <h4>Offers Extended</h4>
+          <div class="stat-val" id="statOffers">—</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AUTHENTICATION VIEW -->
+  <section id="authView" class="container">
+    <div class="auth-box">
+      <div class="auth-header">
+        <h2>Placement Portal</h2>
+        <p>Sign in to view job drives or manage recruitment</p>
+      </div>
+
+      <div class="tabs">
+        <button class="tab-btn active" id="tabLoginBtn" data-tab="loginTab">Sign In</button>
+        <button class="tab-btn" id="tabRegisterBtn" data-tab="registerTab">Student Sign Up</button>
+      </div>
+
+      <!-- Login Panel -->
+      <div id="loginTab" class="tab-panel">
+        <div class="role-switch">
+          <button type="button" class="role-btn active" id="roleStudentBtn" data-role="student">👨‍🎓 Student</button>
+          <button type="button" class="role-btn" id="roleCompanyBtn" data-role="company">🏢 Recruiter</button>
+        </div>
+
+        <form id="loginForm">
+          <div class="input-group">
+            <label for="loginEmail">Email Address</label>
+            <input type="email" id="loginEmail" placeholder="e.g. ananya@vit.edu" required />
+          </div>
+          <div class="input-group">
+            <label for="loginPassword">Password</label>
+            <input type="password" id="loginPassword" placeholder="••••••••" required />
+          </div>
+          <button type="submit" id="loginSubmitBtn">Sign In to Portal</button>
+        </form>
+
+        <div class="demo-credentials-banner">
+          <p>⚡ <strong>Quick Demo Login:</strong></p>
+          <div class="quick-login-btns">
+            <button type="button" class="btn-quick-fill" id="fillStudentDemo">Student Demo (Ananya)</button>
+            <button type="button" class="btn-quick-fill" id="fillCompanyDemo">Company Demo (TCS)</button>
+          </div>
+        </div>
+
+        <p id="loginError" class="error-text"></p>
+      </div>
+
+      <!-- Student Registration Panel -->
+      <div id="registerTab" class="tab-panel hidden">
+        <form id="registerForm">
+          <div class="input-group">
+            <label for="regName">Full Name</label>
+            <input type="text" id="regName" placeholder="e.g. Rohan Sharma" required />
+          </div>
+          <div class="input-group">
+            <label for="regEmail">University Email</label>
+            <input type="email" id="regEmail" placeholder="e.g. rohan@vit.edu" required />
+          </div>
+          <div class="input-group">
+            <label for="regPassword">Password</label>
+            <input type="password" id="regPassword" placeholder="Create password" required />
+          </div>
+          <div class="form-grid-2">
+            <div class="input-group">
+              <label for="regBranch">Branch</label>
+              <select id="regBranch">
+                <option value="CSE">CSE</option>
+                <option value="IT">IT</option>
+                <option value="ECE">ECE</option>
+                <option value="MECH">MECH</option>
+              </select>
+            </div>
+            <div class="input-group">
+              <label for="regCgpa">CGPA (0 - 10)</label>
+              <input type="number" id="regCgpa" placeholder="8.5" step="0.1" min="0" max="10" required />
+            </div>
+          </div>
+          <button type="submit" id="regSubmitBtn">Create Student Profile</button>
+        </form>
+        <p id="registerError" class="error-text"></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- STUDENT DASHBOARD -->
+  <section id="studentView" class="container hidden">
+    <!-- Student Spotlight Banner -->
+    <div class="welcome-banner">
+      <div>
+        <h2 id="studentWelcomeName">Welcome, Student!</h2>
+        <p id="studentWelcomeMeta">Branch: CSE | CGPA: 8.5</p>
+      </div>
+      <div class="student-meta-badges">
+        <span class="package-badge" id="studentStatusBadge">🎓 Enrolled</span>
+      </div>
+    </div>
+
+    <!-- Eligible Drives Section -->
+    <div class="section-header">
+      <h2>💼 Eligible Campus Drives</h2>
+      <span style="color: var(--text-muted); font-size: 0.9rem;" id="eligibleCountLabel">0 drives found</span>
+    </div>
+    <div id="eligibleDrives" class="card-grid"></div>
+
+    <!-- Student Applications History -->
+    <div class="section-header">
+      <h2>📋 My Applications Status</h2>
+    </div>
+    <div class="table-wrapper">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Role Title</th>
+            <th>Company</th>
+            <th>Application Status</th>
+            <th>Submission Date</th>
+          </tr>
+        </thead>
+        <tbody id="myApplicationsBody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- COMPANY DASHBOARD -->
+  <section id="companyView" class="container hidden">
+    <div class="welcome-banner">
+      <div>
+        <h2 id="companyWelcomeName">Recruiter Dashboard</h2>
+        <p>Post placement drives, evaluate applicants, and update recruitment status.</p>
+      </div>
+    </div>
+
+    <!-- Post Drive Form -->
+    <div class="section-header">
+      <h2>📢 Post a New Placement Drive</h2>
+    </div>
+    <div class="form-card">
+      <form id="driveForm">
+        <div class="form-grid-2">
+          <div class="input-group">
+            <label for="driveRole">Job Title / Role</label>
+            <input type="text" id="driveRole" placeholder="e.g. Associate Software Engineer" required />
+          </div>
+          <div class="input-group">
+            <label for="drivePackage">Compensation Package</label>
+            <input type="text" id="drivePackage" placeholder="e.g. 7.5 LPA" required />
+          </div>
+        </div>
+
+        <div class="form-grid-2">
+          <div class="input-group">
+            <label for="driveMinCgpa">Minimum CGPA Cutoff</label>
+            <input type="number" id="driveMinCgpa" placeholder="7.0" step="0.1" min="0" max="10" required />
+          </div>
+          <div class="input-group">
+            <label for="driveLastDate">Application Deadline</label>
+            <input type="date" id="driveLastDate" required />
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label for="driveBranches">Eligible Branches (Ctrl+Click to select multiple)</label>
+          <select id="driveBranches" multiple size="4">
+            <option value="CSE" selected>CSE</option>
+            <option value="IT" selected>IT</option>
+            <option value="ECE">ECE</option>
+            <option value="MECH">MECH</option>
+          </select>
+        </div>
+
+        <div class="input-group">
+          <label for="driveDescription">Role Description & Requirements</label>
+          <textarea id="driveDescription" placeholder="Overview of team responsibilities, tech stack, and evaluation process..." required></textarea>
+        </div>
+
+        <button type="submit" id="postDriveSubmitBtn">Publish Campus Drive 🚀</button>
+      </form>
+    </div>
+
+    <!-- Posted Drives Section -->
+    <div class="section-header">
+      <h2>🏢 Active Drives Posted By Your Organization</h2>
+    </div>
+    <div id="companyDrives" class="card-grid"></div>
+
+    <!-- Applicants Manager Section -->
+    <div class="section-header">
+      <h2>👥 Candidate Applications Review</h2>
+      <div style="display: flex; gap: 0.5rem; align-items: center;">
+        <label for="driveSelector" style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">Drive:</label>
+        <select id="driveSelector" style="min-width: 200px; padding: 0.4rem 0.8rem;"></select>
+      </div>
+    </div>
+    <div class="table-wrapper">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Student Name</th>
+            <th>Email</th>
+            <th>CGPA</th>
+            <th>Current Status</th>
+            <th>Action / Transition</th>
+          </tr>
+        </thead>
+        <tbody id="applicantsBody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
