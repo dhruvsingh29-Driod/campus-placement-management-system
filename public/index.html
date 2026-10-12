@@ -17,6 +17,11 @@
         <h1 id="appTitle">CampusPlacement <span class="badge-beta">PRO</span></h1>
       </div>
     </div>
+
+    <div class="topbar-actions">
+      <a href="/api-docs" target="_blank" class="nav-pill" id="swaggerDocsLink">📖 Swagger API Docs</a>
+      <a href="/api/export/drives.csv" class="nav-pill" id="exportDrivesLink" download>📊 Export Drives CSV</a>
+    </div>
     
     <div id="userBadge" class="hidden">
       <div class="user-pill">
@@ -56,6 +61,20 @@
         <div class="stat-details">
           <h4>Offers Extended</h4>
           <div class="stat-val" id="statOffers">—</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon violet">💎</div>
+        <div class="stat-details">
+          <h4>Highest Package</h4>
+          <div class="stat-val" id="statHighest">—</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon rose">📈</div>
+        <div class="stat-details">
+          <h4>Placement Rate</h4>
+          <div class="stat-val" id="statRate">—</div>
         </div>
       </div>
     </div>
@@ -245,9 +264,10 @@
     <!-- Applicants Manager Section -->
     <div class="section-header">
       <h2>👥 Candidate Applications Review</h2>
-      <div style="display: flex; gap: 0.5rem; align-items: center;">
+      <div style="display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap;">
         <label for="driveSelector" style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">Drive:</label>
         <select id="driveSelector" style="min-width: 200px; padding: 0.4rem 0.8rem;"></select>
+        <a href="/api/export/applications.csv" class="nav-pill" style="padding: 0.45rem 0.85rem; font-size: 0.82rem;" download>📥 Export Applicants CSV</a>
       </div>
     </div>
     <div class="table-wrapper">

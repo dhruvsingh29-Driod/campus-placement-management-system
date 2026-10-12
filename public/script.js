@@ -19,13 +19,32 @@ function hide(id) { document.getElementById(id).classList.add("hidden"); }
 // ---------- System-wide Stats Loader ----------
 async function loadGlobalStats() {
   try {
-    const stats = await apiCall("/stats");
-    document.getElementById("statDrives").textContent = stats.totalDrives ?? "0";
-    document.getElementById("statStudents").textContent = stats.totalStudents ?? "0";
-    document.getElementById("statApplications").textContent = stats.totalApplications ?? "0";
-    document.getElementById("statOffers").textContent = stats.selectedCount ?? "0";
+    const res = await apiCall("/analytics");
+    const summary = res.summary || {};
+    document.getElementById("statDrives").textContent = summary.totalDrives ?? "0";
+    document.getElementById("statStudents").textContent = summary.totalStudents ?? "0";
+    document.getElementById("statApplications").textContent = summary.totalApplications ?? "0";
+    document.getElementById("statOffers").textContent = res.pipeline?.selected ?? "0";
+    
+    const highestEl = document.getElementById("statHighest");
+    if (highestEl) {
+      highestEl.textContent = summary.highestPackageLPA ? `${summary.highestPackageLPA} LPA` : "—";
+    }
+    const rateEl = document.getElementById("statRate");
+    if (rateEl) {
+      rateEl.textContent = `${summary.overallPlacementRate ?? 0}%`;
+    }
   } catch (err) {
-    console.warn("Stats error:", err);
+    console.warn("Analytics error, falling back to basic stats:", err);
+    try {
+      const stats = await apiCall("/stats");
+      document.getElementById("statDrives").textContent = stats.totalDrives ?? "0";
+      document.getElementById("statStudents").textContent = stats.totalStudents ?? "0";
+      document.getElementById("statApplications").textContent = stats.totalApplications ?? "0";
+      document.getElementById("statOffers").textContent = stats.selectedCount ?? "0";
+    } catch (e) {
+      console.error(e);
+    }
   }
 }
 
@@ -333,7 +352,7 @@ async function loadApplicants(driveId) {
       <td><span class="badge badge-status status-${a.status}">${a.status}</span></td>
       <td>
         <select class="status-select" data-app="${a.id}">
-          ${["applied", "shortlisted", "selected", "rejected"].map(s =>
+          ${["applied", "shortlisted", "interview", "selected", "rejected"].map(s =>
             `<option value="${s}" ${s === a.status ? "selected" : ""}>${s.toUpperCase()}</option>`
           ).join("")}
         </select>

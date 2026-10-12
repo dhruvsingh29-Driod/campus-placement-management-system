@@ -203,10 +203,40 @@ h1, h2, h3, h4, .brand-font {
   flex-shrink: 0;
 }
 
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.nav-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-color);
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.35rem 0.85rem;
+  border-radius: var(--radius-full);
+  transition: var(--transition);
+}
+
+.nav-pill:hover {
+  background: rgba(99, 102, 241, 0.15);
+  border-color: var(--primary);
+  color: #FFFFFF;
+  box-shadow: 0 2px 8px var(--primary-glow);
+}
+
 .stat-icon.indigo { background: rgba(99, 102, 241, 0.15); color: var(--primary); }
 .stat-icon.emerald { background: rgba(16, 185, 129, 0.15); color: var(--accent-emerald); }
 .stat-icon.cyan { background: rgba(6, 182, 212, 0.15); color: var(--accent-cyan); }
 .stat-icon.amber { background: rgba(245, 158, 11, 0.15); color: var(--accent-amber); }
+.stat-icon.violet { background: rgba(139, 92, 246, 0.15); color: #A78BFA; }
+.stat-icon.rose { background: rgba(244, 63, 94, 0.15); color: var(--accent-rose); }
 
 .stat-details h4 {
   font-size: 0.8rem;
