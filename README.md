@@ -15,9 +15,10 @@ The **Campus Placement Management System** is a unified, full-stack recruitment 
 
 The system features:
 - **Server-Side Eligibility Engine:** Enforces minimum CGPA and qualifying branch constraints directly in the backend to eliminate ineligible submissions.
-- **Student Dashboard:** Real-time discovery of qualifying drives, duplicate-application prevention, and instant application progress tracking.
-- **Corporate Recruiter Portal:** Job drive authoring, applicant management, and status progression (`Applied` → `Shortlisted` → `Selected` / `Rejected`).
-- **Live System Analytics:** Summary metrics detailing active drives, applicant volumes, and placement rates.
+- **Recruitment Pipeline Stages:** Multi-stage workflow management (`Applied` → `Shortlisted` → `Interview` → `Selected` / `Rejected`).
+- **Interactive Swagger / OpenAPI 3.0 Documentation:** Built-in interactive Swagger UI available at `/api-docs` to test endpoints directly.
+- **Placement Analytics & Reporting:** Deep KPI insights including average package, highest package, department placement rates, and exportable CSV reports.
+- **Automated Test Suite:** 9/9 automated unit and integration tests executing with Node.js test runner.
 
 ---
 
@@ -28,11 +29,13 @@ graph TD
     subgraph Client ["Frontend Layer (Vanilla HTML5 / CSS3 / ES6)"]
         A["Student Portal<br/>(Drives, Eligibility, Status Tracker)"]
         B["Recruiter Dashboard<br/>(Drive Authoring, Applicant Reviews)"]
+        G["Swagger UI Documentation<br/>(/api-docs)"]
     end
 
     subgraph Server ["Backend API (Node.js & Express.js)"]
-        C["REST Controller Router<br/>(Auth, Drives, Applications, Stats)"]
+        C["REST Controller Router<br/>(Auth, Drives, Applications, Analytics)"]
         D["Server-Side Eligibility Guard<br/>(CGPA Cutoff & Branch Matching)"]
+        H["Reporting Engine<br/>(CSV Exporter & OpenAPI Spec)"]
         E["Data Access Layer<br/>(db.js)"]
     end
 
@@ -42,7 +45,9 @@ graph TD
 
     A -->|HTTP Requests| C
     B -->|HTTP Requests| C
+    G -->|OpenAPI Spec| C
     C --> D
+    C --> H
     D --> E
     C --> E
     E --> F
@@ -60,18 +65,17 @@ graph TD
    - Filters job listings server-side so students only see drives they qualify for.
    - Rejects ineligible applications with `403 Forbidden` if submitted via direct API calls.
 
-3. **Application Lifecycle Tracking:**
-   - Visual status progression: `Applied` ➔ `Shortlisted` ➔ `Selected` / `Rejected`.
+3. **Multi-Stage Recruitment Pipeline:**
+   - Track candidates through each stage: `Applied` ➔ `Shortlisted` ➔ `Interview` ➔ `Selected` / `Rejected`.
    - Prevents duplicate applications with `409 Conflict` checks.
 
-4. **Recruiter Drive Management:**
-   - Post comprehensive recruitment drives with role title, compensation package, CGPA cutoffs, eligible branches, and deadlines.
-   - Review applicant profiles per drive with one-click status transitions.
+4. **Executive Placement Analytics & CSV Export:**
+   - Real-time placement rates across academic departments (CSE, IT, ECE, MECH).
+   - Automated salary metrics (highest package, average package).
+   - One-click CSV export of placement drives (`/api/export/drives.csv`) and candidate applications (`/api/export/applications.csv`).
 
-5. **Instant Demo Accounts:**
-   - Pre-seeded test accounts for instant evaluation:
-     - **Student:** `ananya@vit.edu` / `pass123` (CGPA: 8.7, CSE)
-     - **Recruiter:** `hr@tcs.com` / `pass123` (TCS HR)
+5. **Interactive Swagger / OpenAPI 3.0 Documentation:**
+   - Fully documented REST API with embedded Swagger UI at `http://localhost:4000/api-docs`.
 
 ---
 
@@ -79,17 +83,22 @@ graph TD
 
 | Method | Endpoint | Description |
 |---|---|---|
+| `GET` | `/api-docs` | Interactive Swagger UI API documentation |
+| `GET` | `/api/openapi.json` | OpenAPI 3.0 specification in JSON format |
+| `GET` | `/api/analytics` | Executive placement KPI metrics, salary stats & branch rates |
+| `GET` | `/api/stats` | High-level system statistics (drives, students, offers) |
+| `GET` | `/api/export/drives.csv` | Download CSV report of all placement drives |
+| `GET` | `/api/export/applications.csv` | Download CSV report of candidate applications |
 | `POST` | `/api/auth/student/login` | Authenticate student credentials |
 | `POST` | `/api/auth/student/register` | Register new student profile with CGPA & branch |
 | `POST` | `/api/auth/company/login` | Authenticate corporate recruiter credentials |
-| `GET` | `/api/stats` | Retrieve system-wide placement summary metrics |
 | `GET` | `/api/drives` | Fetch all active campus placement drives |
 | `POST` | `/api/drives` | Publish a new job drive (recruiter only) |
 | `GET` | `/api/drives/eligible/:studentId` | Query drives that meet student's CGPA & branch criteria |
 | `POST` | `/api/applications` | Submit application with eligibility and duplicate guards |
 | `GET` | `/api/applications/student/:id` | Retrieve application history for a specific student |
 | `GET` | `/api/applications/drive/:id` | List candidate applicants for a specific drive |
-| `PATCH` | `/api/applications/:id/status` | Update applicant status (`shortlisted`, `selected`, `rejected`) |
+| `PATCH` | `/api/applications/:id/status` | Advance application stage (`shortlisted`, `interview`, `selected`, `rejected`) |
 
 ---
 
